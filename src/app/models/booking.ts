@@ -1,6 +1,5 @@
-
-import { Slot } from "../services/slot";
 import { Candidate } from "./candidate";
+import { Slot } from "./slot";
 
 
 export type BookingStatus = 'CONFIRMED' | 'CANCELLED';
