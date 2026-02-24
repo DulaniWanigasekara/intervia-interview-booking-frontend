@@ -1,228 +1,149 @@
 <div class="max-w-5xl mx-auto px-6 py-8">
 
-    <!-- Header -->
-    <div class="flex items-start justify-between mb-6 flex-wrap gap-4">
-      <div>
-        <h1 class="text-2xl font-bold text-[#1E1B4B]"
-            style="font-family:'Syne',sans-serif">Interview Slots</h1>
-        <p class="text-gray-500 text-sm mt-1">
-          Click any <span class="text-blue-600 font-semibold">Available</span>
-          slot to book your interview
-        </p>
+  <div class="flex items-start justify-between mb-6 flex-wrap gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-[#1E1B4B]"
+          style="font-family:'Syne',sans-serif;">Interview Slots</h1>
+      <p class="text-gray-500 text-sm mt-1">
+        Click any <span class="text-blue-600 font-semibold">Available</span>
+        slot to book your interview
+      </p>
+    </div>
+    <div class="flex gap-4 flex-wrap items-center">
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+        <div class="w-2.5 h-2.5 rounded-sm bg-blue-500"></div> Available
       </div>
-      <!-- Legend -->
-      <div class="flex gap-4 flex-wrap">
-        <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
-          <div class="w-2.5 h-2.5 rounded-sm bg-blue-500"></div> Available
-        </div>
-        <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
-          <div class="w-2.5 h-2.5 rounded-sm bg-green-500"></div> Your Booking
-        </div>
-        <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
-          <div class="w-2.5 h-2.5 rounded-sm bg-gray-400"></div> Booked
-        </div>
-        <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
-          <div class="w-2.5 h-2.5 rounded-sm bg-gray-300"></div> Expired
-        </div>
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+        <div class="w-2.5 h-2.5 rounded-sm bg-green-500"></div> Your Booking
+      </div>
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+        <div class="w-2.5 h-2.5 rounded-sm bg-gray-400"></div> Booked
+      </div>
+      <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+        <div class="w-2.5 h-2.5 rounded-sm bg-gray-300"></div> Expired
       </div>
     </div>
-
-    <!-- Stats pills -->
-    @if (!loading) {
-      <div class="flex gap-3 mb-6 flex-wrap">
-        <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
-                    flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-sm bg-blue-500"></div>
-          <span class="text-xs text-gray-500">Available</span>
-          <span class="font-bold text-[#1E1B4B]">{{ countByStatus('AVAILABLE') }}</span>
-        </div>
-        <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
-                    flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-sm bg-gray-400"></div>
-          <span class="text-xs text-gray-500">Booked</span>
-          <span class="font-bold text-[#1E1B4B]">{{ countByStatus('BOOKED') }}</span>
-        </div>
-        <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
-                    flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-sm bg-gray-300"></div>
-          <span class="text-xs text-gray-500">Expired</span>
-          <span class="font-bold text-[#1E1B4B]">{{ countByStatus('EXPIRED') }}</span>
-        </div>
-      </div>
-    }
-
-    <!-- Filter chips -->
-    <div class="flex gap-2 mb-6 flex-wrap">
-      @for (f of filters; track f.value) {
-        <button (click)="activeFilter = f.value"
-                [class]="activeFilter === f.value
-                  ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-white text-gray-500 border-gray-200 hover:border-indigo-300'"
-                class="px-4 py-2 rounded-full text-sm font-medium border-2
-                       transition-all cursor-pointer">
-          {{ f.label }}
-        </button>
-      }
-    </div>
-
-    <!-- Loading -->
-    @if (loading) {
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        @for (i of [1,2,3,4,5,6]; track i) {
-          <div class="bg-white rounded-2xl p-5 border border-gray-200 animate-pulse">
-            <div class="h-3 bg-gray-200 rounded mb-3 w-1/2"></div>
-            <div class="h-6 bg-gray-200 rounded mb-2 w-3/4"></div>
-            <div class="h-3 bg-gray-200 rounded mb-4 w-1/3"></div>
-            <div class="h-8 bg-gray-200 rounded"></div>
-          </div>
-        }
-      </div>
-    }
-
-    <!-- Error -->
-    @if (loadError) {
-      <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl
-                  px-5 py-4 text-sm">
-        ⚠️ Failed to load slots. Make sure the backend is running on port 8080.
-      </div>
-    }
-
-    <!-- Slots Grid -->
-    @if (!loading && !loadError) {
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        @for (slot of filteredSlots; track slot.id) {
-          <div (click)="onSlotClick(slot)"
-               [class]="slotCardClass(slot)"
-               class="bg-white rounded-2xl p-5 border-2 transition-all
-                      relative overflow-hidden">
-
-            <!-- Top bar -->
-            <div [class]="topBarClass(slot)"
-                 class="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"></div>
-
-            <!-- My booking badge -->
-            @if (isMySlot(slot)) {
-              <div class="absolute top-3 right-3 bg-indigo-50 text-indigo-600
-                          text-xs font-bold px-2 py-1 rounded-md">
-                ✓ Your Booking
-              </div>
-            }
-
-            <div class="text-xs font-bold uppercase tracking-widest
-                        text-gray-400 mb-2">
-              {{ slot.interviewer.name }}
-            </div>
-            <div class="text-xl font-bold text-[#1E1B4B] leading-tight mb-1"
-                 style="font-family:'Syne',sans-serif">
-              {{ slot.startTime | date:'hh:mm a' }} –
-              {{ slot.endTime | date:'hh:mm a' }}
-            </div>
-            <div class="text-xs text-gray-400 mb-4">
-              {{ slot.startTime | date:'EEE, MMM d, y' }}
-            </div>
-
-            <div class="flex items-center justify-between">
-              <app-status-badge [status]="slot.status" />
-              @if (slot.status === 'AVAILABLE') {
-                <button class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700
-                               text-white rounded-lg text-xs font-semibold
-                               transition-all">
-                  Book →
-                </button>
-              } @else if (slot.status === 'EXPIRED') {
-                <span class="text-xs text-gray-400">—</span>
-              } @else {
-                <span class="text-xs text-gray-400 font-medium">Taken</span>
-              }
-            </div>
-          </div>
-        }
-      </div>
-
-      @if (filteredSlots.length === 0) {
-        <div class="text-center py-16 text-gray-400">
-          <div class="text-4xl mb-3">📭</div>
-          <div class="font-semibold">No slots found</div>
-        </div>
-      }
-    }
-
   </div>
 
-  <!-- BOOK MODAL -->
-  @if (selectedSlot) {
-    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center
-                justify-center z-50" (click)="closeModal()">
-      <div class="bg-white rounded-2xl w-[420px] max-w-[95vw] shadow-2xl"
-           (click)="$event.stopPropagation()">
-        <div class="p-6 pb-0">
-          <h2 class="text-xl font-bold text-[#1E1B4B]"
-              style="font-family:'Syne',sans-serif">Confirm Your Booking</h2>
-          <p class="text-gray-400 text-sm mt-1">Review the details before confirming</p>
-        </div>
-
-        <div class="p-6">
-          <!-- Slot preview -->
-          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200
-                      grid grid-cols-2 gap-3 mb-4">
-            <div>
-              <div class="text-xs text-gray-400 uppercase tracking-wider
-                          font-semibold mb-1">Interviewer</div>
-              <div class="text-sm font-semibold">
-                {{ selectedSlot.interviewer.name }}
-              </div>
-            </div>
-            <div>
-              <div class="text-xs text-gray-400 uppercase tracking-wider
-                          font-semibold mb-1">Department</div>
-              <div class="text-sm font-semibold">
-                {{ selectedSlot.interviewer.department }}
-              </div>
-            </div>
-            <div>
-              <div class="text-xs text-gray-400 uppercase tracking-wider
-                          font-semibold mb-1">Date</div>
-              <div class="text-sm font-semibold">
-                {{ selectedSlot.startTime | date:'EEE, MMM d, y' }}
-              </div>
-            </div>
-            <div>
-              <div class="text-xs text-gray-400 uppercase tracking-wider
-                          font-semibold mb-1">Time</div>
-              <div class="text-sm font-semibold">
-                {{ selectedSlot.startTime | date:'hh:mm a' }} –
-                {{ selectedSlot.endTime | date:'hh:mm a' }}
-              </div>
-            </div>
-          </div>
-
-          <!-- Error from backend -->
-          @if (bookingError) {
-            <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg
-                        px-4 py-3 text-sm mb-4 flex gap-2">
-              ⚠️ {{ bookingError }}
-            </div>
-          }
-
-          <div class="bg-green-50 border border-green-200 text-green-700
-                      rounded-lg px-4 py-3 text-sm">
-            ✅ A confirmation email will be sent to both you and the interviewer.
-          </div>
-        </div>
-
-        <div class="flex gap-3 px-6 pb-6">
-          <button (click)="closeModal()"
-                  class="px-5 py-3 border-2 border-gray-200 rounded-xl text-sm
-                         font-semibold text-gray-500 hover:bg-gray-50 transition-all">
-            Go Back
-          </button>
-          <button (click)="confirmBooking()" [disabled]="bookingLoading"
-                  class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white
-                         rounded-xl text-sm font-semibold transition-all
-                         disabled:opacity-50 disabled:cursor-not-allowed">
-            {{ bookingLoading ? 'Booking...' : 'Confirm Booking' }}
-          </button>
-        </div>
+  @if (!loading) {
+    <div class="flex gap-3 mb-6 flex-wrap">
+      <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
+                  flex items-center gap-3">
+        <div class="w-2.5 h-2.5 rounded-sm bg-blue-500"></div>
+        <span class="text-xs text-gray-500">Available</span>
+        <span class="font-bold text-[#1E1B4B]">{{ countByStatus('AVAILABLE') }}</span>
+      </div>
+      <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
+                  flex items-center gap-3">
+        <div class="w-2.5 h-2.5 rounded-sm bg-gray-400"></div>
+        <span class="text-xs text-gray-500">Booked</span>
+        <span class="font-bold text-[#1E1B4B]">{{ countByStatus('BOOKED') }}</span>
+      </div>
+      <div class="bg-white border border-gray-200 rounded-xl px-4 py-2.5
+                  flex items-center gap-3">
+        <div class="w-2.5 h-2.5 rounded-sm bg-gray-300"></div>
+        <span class="text-xs text-gray-500">Expired</span>
+        <span class="font-bold text-[#1E1B4B]">{{ countByStatus('EXPIRED') }}</span>
       </div>
     </div>
   }
+
+  <div class="flex gap-2 mb-6 flex-wrap">
+    @for (f of filters; track f.value) {
+      <button (click)="activeFilter = f.value"
+              [class]="activeFilter === f.value
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-gray-500 border-gray-200 hover:border-indigo-300'"
+              class="px-4 py-2 rounded-full text-sm font-medium border-2 transition-all">
+        {{ f.label }}
+      </button>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (i of skeletons; track i) {
+        <div class="bg-white rounded-2xl p-5 border border-gray-200 animate-pulse">
+          <div class="h-3 bg-gray-200 rounded mb-3 w-1/2"></div>
+          <div class="h-6 bg-gray-200 rounded mb-2 w-3/4"></div>
+          <div class="h-3 bg-gray-200 rounded mb-4 w-1/3"></div>
+          <div class="flex justify-between">
+            <div class="h-6 bg-gray-200 rounded w-20"></div>
+            <div class="h-8 bg-gray-200 rounded w-16"></div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (loadError) {
+    <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm">
+      ⚠️ Failed to load slots. Make sure the backend is running on port 8080.
+      <button (click)="loadSlots()" class="ml-3 underline font-semibold">Retry</button>
+    </div>
+  }
+
+  @if (!loading && !loadError) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (slot of filteredSlots; track slot.id) {
+        <div (click)="onSlotClick(slot)"
+             [class]="slotCardClass(slot)"
+             class="bg-white rounded-2xl p-5 border-2 transition-all relative overflow-hidden">
+
+          <div class="absolute top-0 left-0 right-0 h-1 rounded-t-2xl
+                      bg-gradient-to-r" [class]="topBarClass(slot)"></div>
+
+          @if (isMySlot(slot)) {
+            <div class="absolute top-3 right-3 bg-indigo-50 text-indigo-600
+                        text-xs font-bold px-2 py-1 rounded-md">
+              ✓ Your Booking
+            </div>
+          }
+
+          <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
+            {{ slot.interviewer.name }}
+          </div>
+          <div class="text-xl font-bold text-[#1E1B4B] leading-tight mb-1"
+               style="font-family:'Syne',sans-serif;">
+            {{ slot.startTime | date:'hh:mm a' }} – {{ slot.endTime | date:'hh:mm a' }}
+          </div>
+          <div class="text-xs text-gray-400 mb-4">
+            {{ slot.startTime | date:'EEE, MMM d, y' }}
+          </div>
+
+          <div class="flex items-center justify-between">
+            <app-status-badge [status]="slot.status" />
+            @if (slot.status === 'AVAILABLE' && !isMySlot(slot)) {
+              <button class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700
+                             text-white rounded-lg text-xs font-semibold transition-all">
+                Book →
+              </button>
+            } @else if (isMySlot(slot)) {
+              <span class="text-xs text-green-600 font-semibold">Booked ✓</span>
+            } @else if (slot.status === 'EXPIRED') {
+              <span class="text-xs text-gray-400">—</span>
+            } @else {
+              <span class="text-xs text-gray-400 font-medium">Taken</span>
+            }
+          </div>
+
+        </div>
+      }
+    </div>
+
+    @if (filteredSlots.length === 0) {
+      <div class="text-center py-16 text-gray-400">
+        <div class="text-4xl mb-3">📭</div>
+        <div class="font-semibold">No slots found for this filter</div>
+      </div>
+    }
+  }
+
+</div>
+
+<app-book-modal
+  [slot]="selectedSlot"
+  [loading]="bookingLoading"
+  [errorMessage]="bookingError"
+  (confirmed)="confirmBooking()"
+  (cancelled)="closeModal()" />
