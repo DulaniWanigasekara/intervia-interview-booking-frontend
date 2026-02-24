@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-slots',
-  imports: [],
-  templateUrl: './slots.html',
-  styleUrl: './slots.css',
+  standalone: true,
+  imports: [CommonModule],
+  template: `<div>Slots Page</div>`
 })
-export class Slots {
-
-}
+export class SlotsComponent {}
