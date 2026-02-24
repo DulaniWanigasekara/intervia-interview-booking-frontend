@@ -1,1 +1,103 @@
-<p>home works!</p>
+<div class="min-h-[calc(100vh-64px)] flex items-center justify-center
+              bg-gradient-to-br from-[#F5F5FA] to-[#EEF2FF] px-5 py-10">
+    <div class="flex gap-16 items-center max-w-4xl w-full">
+
+      <!-- LEFT -->
+      <div class="flex-1">
+        <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600
+                    text-xs font-semibold px-3 py-1.5 rounded-full border
+                    border-indigo-200 mb-5">
+          ✨ Simple Interview Scheduling
+        </div>
+        <h1 class="font-bold text-[#1E1B4B] text-4xl leading-tight mb-4"
+            style="font-family:'Syne',sans-serif">
+          Book your<br/>
+          <span class="text-indigo-500">interview slot</span><br/>
+          with ease
+        </h1>
+        <p class="text-gray-500 text-sm leading-relaxed mb-7 max-w-sm">
+          View all available interview slots in real-time, pick the one
+          that works for you, and confirm in seconds.
+        </p>
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <div class="w-2 h-2 rounded-full bg-indigo-500 flex-shrink-0"></div>
+            See live availability — Available, Booked and Expired
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <div class="w-2 h-2 rounded-full bg-indigo-500 flex-shrink-0"></div>
+            Book in one click — no back and forth
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <div class="w-2 h-2 rounded-full bg-indigo-500 flex-shrink-0"></div>
+            Cancel anytime before your slot
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD -->
+      <div class="bg-white rounded-2xl p-9 shadow-xl w-80 flex-shrink-0
+                  border border-indigo-100">
+        <h2 class="font-bold text-xl text-[#1E1B4B] mb-1"
+            style="font-family:'Syne',sans-serif">Get Started</h2>
+        <p class="text-gray-400 text-sm mb-6">Enter your details to view and book slots</p>
+
+        <!-- Global error -->
+        @if (errorMessage) {
+          <div class="bg-red-50 border border-red-200 text-red-700
+                      rounded-lg px-4 py-3 text-sm mb-4">
+            ⚠️ {{ errorMessage }}
+          </div>
+        }
+
+        <!-- Name -->
+        <div class="mb-4">
+          <label class="block text-xs font-bold uppercase tracking-wider
+                        text-gray-600 mb-2">Full Name</label>
+          <input [(ngModel)]="form.name" type="text"
+                 placeholder="e.g. Sarah Fernando"
+                 class="w-full px-4 py-3 rounded-xl border-2 text-sm outline-none
+                        transition-all bg-gray-50 focus:bg-white focus:border-indigo-400"
+                 [class.border-red-400]="errors.name"
+                 [class.border-gray-200]="!errors.name"/>
+          @if (errors.name) {
+            <p class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <label class="block text-xs font-bold uppercase tracking-wider
+                        text-gray-600 mb-2">Email Address</label>
+          <input [(ngModel)]="form.email" type="email"
+                 placeholder="sarah@gmail.com"
+                 class="w-full px-4 py-3 rounded-xl border-2 text-sm outline-none
+                        transition-all bg-gray-50 focus:bg-white focus:border-indigo-400"
+                 [class.border-red-400]="errors.email"
+                 [class.border-gray-200]="!errors.email"/>
+          @if (errors.email) {
+            <p class="text-red-500 text-xs mt-1">{{ errors.email }}</p>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-6">
+          <label class="block text-xs font-bold uppercase tracking-wider
+                        text-gray-600 mb-2">Phone Number</label>
+          <input [(ngModel)]="form.phone" type="text"
+                 placeholder="+94 77 123 4567"
+                 class="w-full px-4 py-3 rounded-xl border-2 border-gray-200
+                        text-sm outline-none transition-all bg-gray-50
+                        focus:bg-white focus:border-indigo-400"/>
+        </div>
+
+        <button (click)="submit()" [disabled]="loading"
+                class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white
+                       rounded-xl font-semibold text-sm transition-all
+                       disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ loading ? 'Please wait...' : 'Continue to Slots →' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
