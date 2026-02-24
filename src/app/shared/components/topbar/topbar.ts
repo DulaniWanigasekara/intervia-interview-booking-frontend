@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-topbar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
-  templateUrl: './topbar.html'   // ← points to the html file
+  templateUrl: './topbar.html'   
 })
 export class TopbarComponent implements OnInit {
   candidate: any = null;
