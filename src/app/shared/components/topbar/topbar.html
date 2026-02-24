@@ -1,1 +1,51 @@
-<p>topbar works!</p>
+<header class="bg-[#1E1B4B] px-10 h-16 flex items-center justify-between sticky top-0 z-50">
+
+  <!-- Logo -->
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 bg-indigo-500 rounded-xl flex items-center justify-center
+                text-white font-bold text-sm">IV</div>
+    <div>
+      <div class="text-white font-bold text-lg leading-none">Intervia</div>
+      <div class="text-indigo-400 text-xs tracking-widest uppercase">Interview Booking</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="flex items-center gap-3">
+    <nav class="flex gap-1">
+      <a routerLink="/"
+         routerLinkActive="bg-indigo-600 text-white"
+         [routerLinkActiveOptions]="{exact:true}"
+         class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-300
+                hover:bg-[#2D2A6E] hover:text-white transition-all">
+        Home
+      </a>
+      <a routerLink="/slots"
+         routerLinkActive="bg-indigo-600 text-white"
+         class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-300
+                hover:bg-[#2D2A6E] hover:text-white transition-all">
+        View Slots
+      </a>
+      <a routerLink="/my-booking"
+         routerLinkActive="bg-indigo-600 text-white"
+         class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-300
+                hover:bg-[#2D2A6E] hover:text-white transition-all">
+        My Booking
+      </a>
+    </nav>
+
+    <!-- User chip -->
+    @if (candidate) {
+      <div class="flex items-center gap-2 bg-[#2D2A6E] rounded-full px-3 py-1.5">
+        <div class="w-7 h-7 rounded-full bg-indigo-500 flex items-center
+                    justify-center text-white text-xs font-bold">
+          {{ candidate.name[0].toUpperCase() }}
+        </div>
+        <span class="text-white text-sm font-medium">
+          {{ candidate.name.split(' ')[0] }}
+        </span>
+      </div>
+    }
+  </div>
+
+</header>
