@@ -1,1 +1,83 @@
-<p>book-modal works!</p>
+@if (slot) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center
+              justify-center z-50"
+       (click)="close()">
+    <div class="bg-white rounded-2xl w-[440px] max-w-[95vw] shadow-2xl"
+         (click)="$event.stopPropagation()">
+
+      <div class="p-6 pb-0">
+        <h2 class="text-xl font-bold text-[#1E1B4B]"
+            style="font-family:'Syne',sans-serif;">Confirm Your Booking</h2>
+        <p class="text-gray-400 text-sm mt-1">Review the details before confirming</p>
+      </div>
+
+      <div class="p-6">
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200
+                    grid grid-cols-2 gap-3 mb-4">
+          <div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">
+              Interviewer
+            </div>
+            <div class="text-sm font-semibold">{{ slot.interviewer.name }}</div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">
+              Department
+            </div>
+            <div class="text-sm font-semibold">{{ slot.interviewer.department }}</div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">
+              Date
+            </div>
+            <div class="text-sm font-semibold">
+              {{ slot.startTime | date:'EEE, MMM d, y' }}
+            </div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">
+              Time
+            </div>
+            <div class="text-sm font-semibold">
+              {{ slot.startTime | date:'hh:mm a' }} – {{ slot.endTime | date:'hh:mm a' }}
+            </div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">
+              Status
+            </div>
+            <app-status-badge [status]="slot.status" />
+          </div>
+        </div>
+
+        @if (errorMessage) {
+          <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg
+                      px-4 py-3 text-sm mb-4 flex gap-2 items-start">
+            <span>⚠️</span><span>{{ errorMessage }}</span>
+          </div>
+        }
+
+        <div class="bg-green-50 border border-green-200 text-green-700
+                    rounded-lg px-4 py-3 text-sm">
+          ✅ A confirmation email will be sent to both you and the interviewer.
+        </div>
+      </div>
+
+      <div class="flex gap-3 px-6 pb-6">
+        <button (click)="close()"
+                class="px-5 py-3 border-2 border-gray-200 rounded-xl text-sm
+                       font-semibold text-gray-500 hover:bg-gray-50 transition-all">
+          Go Back
+        </button>
+        <button (click)="confirm()"
+                [disabled]="loading"
+                class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white
+                       rounded-xl text-sm font-semibold transition-all
+                       disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ loading ? 'Booking...' : 'Confirm Booking' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
