@@ -3,18 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BookingService } from '../../core/services/booking';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge';
+import { CancelModalComponent } from '../../shared/components/cancel-modal/cancel-modal';
 import { Booking } from '../../core/models/booking.model';
 
 @Component({
   selector: 'app-my-booking',
   standalone: true,
-  imports: [CommonModule, StatusBadgeComponent],
-  templateUrl: `./my-booking.html`
+  imports: [CommonModule, StatusBadgeComponent, CancelModalComponent],
+  templateUrl: './my-booking.html'
 })
 export class MyBookingComponent implements OnInit {
   booking: Booking | null = null;
   loading = true;
-  showCancelConfirm = false;
+  showCancelModal = false;
   cancelLoading = false;
   cancelError = '';
 
@@ -26,7 +27,6 @@ export class MyBookingComponent implements OnInit {
   ngOnInit() {
     const stored = localStorage.getItem('intervia_candidate');
     if (!stored) { this.loading = false; return; }
-
     const candidate = JSON.parse(stored);
     this.bookingService.getByCandidate(candidate.id).subscribe({
       next: (bookings) => {
@@ -41,11 +41,10 @@ export class MyBookingComponent implements OnInit {
     if (!this.booking) return;
     this.cancelLoading = true;
     this.cancelError = '';
-
     this.bookingService.cancel(this.booking.id).subscribe({
       next: () => {
         this.cancelLoading = false;
-        this.showCancelConfirm = false;
+        this.showCancelModal = false;
         this.booking = null;
       },
       error: (err) => {
