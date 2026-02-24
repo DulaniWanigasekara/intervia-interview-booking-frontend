@@ -6,11 +6,6 @@ import { TopbarComponent } from './shared/components/topbar/topbar';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, TopbarComponent],
-  template: `
-    <div class="min-h-screen bg-[#F5F5FA]">
-      <app-topbar />
-      <router-outlet />
-    </div>
-  `
+  templateUrl: './app.html'
 })
 export class AppComponent {}
