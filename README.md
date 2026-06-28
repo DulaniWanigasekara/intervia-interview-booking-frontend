@@ -1,6 +1,6 @@
 # Intervia – Interview Booking Frontend
 
-A single-page Angular application that allows candidates to register, browse available interview slots, book an interview, and manage their booking.
+A Angular application that allows candidates to register, browse available interview slots, book an interview, and manage their booking.
 
 ---
 
