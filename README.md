@@ -8,7 +8,7 @@ A Angular application that allows candidates to register, browse available inter
 
 - **Candidate Registration / Login** – Register with name, email, and phone number, or look up an existing account by email.
 - **Browse Interview Slots** – View all slots with interviewer details, start/end times, and current status.
-- **Filter Slots** – Filter the slot list by status: All, Available, Booked, or Expired.
+- **Filter Slots** – Filter the slot list by status:- All, Available, Booked, or Expired.
 - **Book an Interview** – Select an available slot and confirm the booking through a modal dialog.
 - **Manage Bookings** – View your active booking and cancel it if needed.
 - **Session Persistence** – Candidate data is stored in `localStorage` so the session survives a page refresh.
